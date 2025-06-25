@@ -1,0 +1,56 @@
+﻿@using Blazor.Extensions.Canvas
+@using Blazor.Extensions.Canvas.Model
+@page "/canva"
+@rendermode InteractiveWebAssembly
+<h3>CanvaComponent</h3>
+<div @onmousedown="StartDrawing"
+     @onmouseup="StopDrawing"
+     @onmousemove="Draw"
+    style="width:300px; height:400px;">
+    <BECanvas Width="300" Height="400" @ref="_canvasReference">
+    </BECanvas>
+</div>
+
+
+@code {
+    private Canvas2DContext _context;
+    private BECanvasComponent _canvasReference;
+    private double _lastX, _lastY;
+    private bool _isDrawing = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _context = await this._canvasReference.CreateCanvas2DAsync();
+        }
+    }
+    
+
+    private async Task StartDrawing(MouseEventArgs e)
+    {
+        _isDrawing = true;
+        _lastX = e.OffsetX;
+        _lastY = e.OffsetY;
+    }
+
+    private Task StopDrawing(MouseEventArgs e)
+    {
+        _isDrawing = false;
+        return Task.CompletedTask;
+    }
+
+    private async Task Draw(MouseEventArgs e)
+    {
+        if (_isDrawing)
+        {
+            await this._context.BeginPathAsync();
+            await this._context.MoveToAsync(_lastX, _lastY);
+            await this._context.LineToAsync(e.OffsetX, e.OffsetY);
+            await this._context.StrokeAsync();
+
+            _lastX = e.OffsetX;
+            _lastY = e.OffsetY;
+        }
+    }
+}

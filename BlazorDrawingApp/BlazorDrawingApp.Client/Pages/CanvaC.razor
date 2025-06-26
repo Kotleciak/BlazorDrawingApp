@@ -2,14 +2,40 @@
 @using Blazor.Extensions.Canvas.Model
 @page "/canva"
 @rendermode InteractiveWebAssembly
-<h3>CanvaComponent</h3>
 <div @onmousedown="StartDrawing"
      @onmouseup="StopDrawing"
      @onmousemove="Draw"
-    style="width:300px; height:400px;">
-    <BECanvas Width="300" Height="400" @ref="_canvasReference">
+    style="width:100%; height:100%;"
+     @ref="containerRef">
+    <BECanvas Width="@_canvasWidth" Height="@_canvasHeight" @ref="_canvasReference">
     </BECanvas>
+    <div class="toolDiv" id="BrushDiv"><!--Brush thickness-->
+
+    </div>
+    <div class="toolDiv" id="ColorDiv"><!--Brush color-->
+        <button style="background-color: #ff0000" class="colorSample"></button>
+        <button style="background-color: #ff6a00" class="colorSample"></button>
+        <button style="background-color: #ffd900" class="colorSample"></button>
+        <button style="background-color: #b3ff00" class="colorSample"></button>
+        <button style="background-color: #2c7d00" class="colorSample"></button>
+        <button style="background-color: #00ffc8" class="colorSample"></button>
+        <button style="background-color: #00d5ff" class="colorSample"></button>
+        <button style="background-color: #001c82" class="colorSample"></button>
+        <button style="background-color: #6f08ff" class="colorSample"></button>
+        <button style="background-color: #ff08ea" class="colorSample"></button>
+        <button style="background-color: #360c01" class="colorSample"></button>
+        <button style="background-color: #612414" class="colorSample"></button>
+        <button style="background-color: #000000" class="colorSample"></button>
+    </div>
 </div>
+<script>
+    window.getElementWidth = (element) => {
+      return element.offsetWidth;
+    };
+	window.getElementHeight = (element) => {
+	  return element.offsetHeight;
+	};
+</script>
 
 
 @code {
@@ -17,11 +43,18 @@
     private BECanvasComponent _canvasReference;
     private double _lastX, _lastY;
     private bool _isDrawing = false;
+	private int _canvasWidth = 100;
+	private int _canvasHeight = 400;
+    private ElementReference containerRef;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            _canvasWidth = await JS.InvokeAsync<int>("getElementWidth", containerRef);
+			_canvasHeight = await JS.InvokeAsync<int>("getElementHeight", containerRef);
+			StateHasChanged();
+			//I don't know how it works, but it works and github copilot was right
             _context = await this._canvasReference.CreateCanvas2DAsync();
         }
     }

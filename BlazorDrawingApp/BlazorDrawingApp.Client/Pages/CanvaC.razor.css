@@ -1,0 +1,29 @@
+﻿.toolDiv {
+    width: 5.5%;
+    height: 80%;
+    position: absolute;
+    background-color: #fae191;
+    border-radius: 3%;
+    border: 1px solid black;
+    box-shadow: 3px 3px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+#BrushDiv {
+    left: 5%;
+    top:10%;
+}
+#ColorDiv {
+    right: 5%;
+    top: 10%;
+}
+.colorSample {
+    border: none;
+    border-radius: 50%;
+    width: 40px; 
+    height: 40px; 
+    display: block;
+    display: block;
+}

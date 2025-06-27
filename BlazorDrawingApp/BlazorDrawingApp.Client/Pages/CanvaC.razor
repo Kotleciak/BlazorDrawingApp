@@ -3,38 +3,47 @@
 @page "/canva"
 @rendermode InteractiveWebAssembly
 <div @onmousedown="StartDrawing"
-     @onmouseup="StopDrawing"
-     @onmousemove="Draw"
-    style="width:100%; height:100%;"
-     @ref="containerRef">
+@onmouseup="StopDrawing"
+@onmousemove="Draw"
+id="CanvaDiv"
+@ref="containerRef">
     <BECanvas Width="@_canvasWidth" Height="@_canvasHeight" @ref="_canvasReference">
     </BECanvas>
     <div class="toolDiv" id="BrushDiv"><!--Brush thickness-->
-
+        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-1" @onclick='() => ChangeThickness(1)'></div></button>
+        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-2" @onclick='() => ChangeThickness(2)'></div></button>
+        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-3" @onclick='() => ChangeThickness(3)'></div></button>
+        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-4" @onclick='() => ChangeThickness(4)'></div></button>
+        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-5" @onclick='() => ChangeThickness(5)'></div></button>
+        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-6" @onclick='() => ChangeThickness(6)'></div></button>
+        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-7" @onclick='() => ChangeThickness(7)'></div></button>
+        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-8" @onclick='() => ChangeThickness(8)'></div></button>
+        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-9" @onclick='() => ChangeThickness(9)'></div></button>
+        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-10" @onclick='() => ChangeThickness(10)'></div></button>
     </div>
     <div class="toolDiv" id="ColorDiv"><!--Brush color-->
-        <button style="background-color: #ff0000" class="colorSample"></button>
-        <button style="background-color: #ff6a00" class="colorSample"></button>
-        <button style="background-color: #ffd900" class="colorSample"></button>
-        <button style="background-color: #b3ff00" class="colorSample"></button>
-        <button style="background-color: #2c7d00" class="colorSample"></button>
-        <button style="background-color: #00ffc8" class="colorSample"></button>
-        <button style="background-color: #00d5ff" class="colorSample"></button>
-        <button style="background-color: #001c82" class="colorSample"></button>
-        <button style="background-color: #6f08ff" class="colorSample"></button>
-        <button style="background-color: #ff08ea" class="colorSample"></button>
-        <button style="background-color: #360c01" class="colorSample"></button>
-        <button style="background-color: #612414" class="colorSample"></button>
-        <button style="background-color: #000000" class="colorSample"></button>
+        <button style="background-color: #ff0000" class="colorSample" @onclick='() => ChangeColor("#ff0000")'></button>
+        <button style="background-color: #ff6a00" class="colorSample" @onclick='() => ChangeColor("#ff6a00")'></button>
+        <button style="background-color: #ffd900" class="colorSample" @onclick='() => ChangeColor("#ffd900")'></button>
+        <button style="background-color: #b3ff00" class="colorSample" @onclick='() => ChangeColor("#b3ff00")'></button>
+        <button style="background-color: #2c7d00" class="colorSample" @onclick='() => ChangeColor("#2c7d00")'></button>
+        <button style="background-color: #00ffc8" class="colorSample" @onclick='() => ChangeColor("#00ffc8")'></button>
+        <button style="background-color: #00d5ff" class="colorSample" @onclick='() => ChangeColor("#00d5ff")'></button>
+        <button style="background-color: #001c82" class="colorSample" @onclick='() => ChangeColor("#001c82")'></button>
+        <button style="background-color: #6f08ff" class="colorSample" @onclick='() => ChangeColor("#6f08ff")'></button>
+        <button style="background-color: #ff08ea" class="colorSample" @onclick='() => ChangeColor("#ff08ea")'></button>
+        <button style="background-color: #360c01" class="colorSample" @onclick='() => ChangeColor("#360c01")'></button>
+        <button style="background-color: #612414" class="colorSample" @onclick='() => ChangeColor("#612414")'></button>
+        <button style="background-color: #000000" class="colorSample" @onclick='() => ChangeColor("#000000")'></button>
     </div>
 </div>
 <script>
     window.getElementWidth = (element) => {
-      return element.offsetWidth;
+    return element.offsetWidth;
     };
-	window.getElementHeight = (element) => {
-	  return element.offsetHeight;
-	};
+    window.getElementHeight = (element) => {
+    return element.offsetHeight;
+    };
 </script>
 
 
@@ -43,8 +52,8 @@
     private BECanvasComponent _canvasReference;
     private double _lastX, _lastY;
     private bool _isDrawing = false;
-	private int _canvasWidth = 100;
-	private int _canvasHeight = 400;
+    private int _canvasWidth = 100;
+    private int _canvasHeight = 400;
     private ElementReference containerRef;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -52,13 +61,12 @@
         if (firstRender)
         {
             _canvasWidth = await JS.InvokeAsync<int>("getElementWidth", containerRef);
-			_canvasHeight = await JS.InvokeAsync<int>("getElementHeight", containerRef);
-			StateHasChanged();
-			//I don't know how it works, but it works and github copilot was right
+            _canvasHeight = await JS.InvokeAsync<int>("getElementHeight", containerRef);//I know how it works
+            StateHasChanged();//but not this one how it works, but it works and github copilot was right
             _context = await this._canvasReference.CreateCanvas2DAsync();
         }
     }
-    
+
 
     private async Task StartDrawing(MouseEventArgs e)
     {
@@ -85,5 +93,14 @@
             _lastX = e.OffsetX;
             _lastY = e.OffsetY;
         }
+    }
+    private async Task ChangeColor(string color)
+    {
+        await _context.SetStrokeStyleAsync(color);
+    }
+	private async Task ChangeThickness(int thickness)
+	{
+		await _context.SetLineWidthAsync((float)thickness);
+		//need to correct this
     }
 }

@@ -26,4 +26,76 @@
     height: 40px; 
     display: block;
     display: block;
+    box-sizing: border-box;
+}
+    .colorSample:hover {
+        border: 2px solid lightgray;
+        padding: 8px;
+    }
+#CanvaDiv {
+    height: 100%;
+    width: 100%;
+    cursor:crosshair;
+}
+.thicknessChanger {
+    display: block;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    padding: 0;
+    box-sizing: border-box;
+}
+.thicknessChangerDiv {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    margin: auto;
+}
+
+
+#tC-1 {
+    width: 10% !important;
+    height: 10% !important;
+}
+#tC-2 {
+    width: 20% !important;
+    height: 20% !important;
+}
+#tC-3 {
+    width: 30% !important;
+    height: 30% !important;
+}
+#tC-4 {
+    width: 40% !important;
+    height: 40% !important;
+}
+#tC-5 {
+    width: 50% !important;
+    height: 50% !important;
+}
+#tC-6 {
+    width: 60% !important;
+    height: 60% !important;
+}
+#tC-7 {
+    width: 70% !important;
+    height: 70% !important;
+}
+#tC-8 {
+    width: 80% !important;
+    height: 80% !important;
+}
+#tC-9 {
+    width: 90% !important;
+    height: 90% !important;
+}
+#tC-10 {
+    width: 100% !important;
+    height: 100% !important;
 }

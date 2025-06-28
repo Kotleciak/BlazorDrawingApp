@@ -2,40 +2,46 @@
 @using Blazor.Extensions.Canvas.Model
 @page "/canva"
 @rendermode InteractiveWebAssembly
-<div @onmousedown="StartDrawing"
-@onmouseup="StopDrawing"
-@onmousemove="Draw"
-id="CanvaDiv"
-@ref="containerRef">
-    <BECanvas Width="@_canvasWidth" Height="@_canvasHeight" @ref="_canvasReference">
-    </BECanvas>
-    <div class="toolDiv" id="BrushDiv"><!--Brush thickness-->
-        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-1" @onclick='() => ChangeThickness(1)'></div></button>
-        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-2" @onclick='() => ChangeThickness(2)'></div></button>
-        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-3" @onclick='() => ChangeThickness(3)'></div></button>
-        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-4" @onclick='() => ChangeThickness(4)'></div></button>
-        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-5" @onclick='() => ChangeThickness(5)'></div></button>
-        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-6" @onclick='() => ChangeThickness(6)'></div></button>
-        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-7" @onclick='() => ChangeThickness(7)'></div></button>
-        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-8" @onclick='() => ChangeThickness(8)'></div></button>
-        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-9" @onclick='() => ChangeThickness(9)'></div></button>
-        <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-10" @onclick='() => ChangeThickness(10)'></div></button>
+
+
+<div id="canvaContainer">
+    <div @onmousedown="StartDrawing"
+         @onmouseup="StopDrawing"
+         @onmousemove="Draw"
+         id="CanvaDiv"
+         @ref="containerRef">
+        <BECanvas Width="@_canvasWidth" Height="@_canvasHeight" @ref="_canvasReference">
+        </BECanvas>
     </div>
-    <div class="toolDiv" id="ColorDiv"><!--Brush color-->
-        <button style="background-color: #ff0000" class="colorSample" @onclick='() => ChangeColor("#ff0000")'></button>
-        <button style="background-color: #ff6a00" class="colorSample" @onclick='() => ChangeColor("#ff6a00")'></button>
-        <button style="background-color: #ffd900" class="colorSample" @onclick='() => ChangeColor("#ffd900")'></button>
-        <button style="background-color: #b3ff00" class="colorSample" @onclick='() => ChangeColor("#b3ff00")'></button>
-        <button style="background-color: #2c7d00" class="colorSample" @onclick='() => ChangeColor("#2c7d00")'></button>
-        <button style="background-color: #00ffc8" class="colorSample" @onclick='() => ChangeColor("#00ffc8")'></button>
-        <button style="background-color: #00d5ff" class="colorSample" @onclick='() => ChangeColor("#00d5ff")'></button>
-        <button style="background-color: #001c82" class="colorSample" @onclick='() => ChangeColor("#001c82")'></button>
-        <button style="background-color: #6f08ff" class="colorSample" @onclick='() => ChangeColor("#6f08ff")'></button>
-        <button style="background-color: #ff08ea" class="colorSample" @onclick='() => ChangeColor("#ff08ea")'></button>
-        <button style="background-color: #360c01" class="colorSample" @onclick='() => ChangeColor("#360c01")'></button>
-        <button style="background-color: #612414" class="colorSample" @onclick='() => ChangeColor("#612414")'></button>
-        <button style="background-color: #000000" class="colorSample" @onclick='() => ChangeColor("#000000")'></button>
-    </div>
+</div>
+<div class="toolDiv" id="BrushDiv">
+    <!--Brush thickness-->
+    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-1" @onclick='() => ChangeThickness(1)'></div></button>
+    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-2" @onclick='() => ChangeThickness(2)'></div></button>
+    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-3" @onclick='() => ChangeThickness(3)'></div></button>
+    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-4" @onclick='() => ChangeThickness(4)'></div></button>
+    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-5" @onclick='() => ChangeThickness(5)'></div></button>
+    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-6" @onclick='() => ChangeThickness(6)'></div></button>
+    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-7" @onclick='() => ChangeThickness(7)'></div></button>
+    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-8" @onclick='() => ChangeThickness(8)'></div></button>
+    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-9" @onclick='() => ChangeThickness(9)'></div></button>
+    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-10" @onclick='() => ChangeThickness(10)'></div></button>
+</div>
+<div class="toolDiv" id="ColorDiv">
+    <!--Brush color-->
+    <button style="background-color: #ff0000" class="colorSample" @onclick='() => ChangeColor("#ff0000")'></button>
+    <button style="background-color: #ff6a00" class="colorSample" @onclick='() => ChangeColor("#ff6a00")'></button>
+    <button style="background-color: #ffd900" class="colorSample" @onclick='() => ChangeColor("#ffd900")'></button>
+    <button style="background-color: #b3ff00" class="colorSample" @onclick='() => ChangeColor("#b3ff00")'></button>
+    <button style="background-color: #2c7d00" class="colorSample" @onclick='() => ChangeColor("#2c7d00")'></button>
+    <button style="background-color: #00ffc8" class="colorSample" @onclick='() => ChangeColor("#00ffc8")'></button>
+    <button style="background-color: #00d5ff" class="colorSample" @onclick='() => ChangeColor("#00d5ff")'></button>
+    <button style="background-color: #001c82" class="colorSample" @onclick='() => ChangeColor("#001c82")'></button>
+    <button style="background-color: #6f08ff" class="colorSample" @onclick='() => ChangeColor("#6f08ff")'></button>
+    <button style="background-color: #ff08ea" class="colorSample" @onclick='() => ChangeColor("#ff08ea")'></button>
+    <button style="background-color: #360c01" class="colorSample" @onclick='() => ChangeColor("#360c01")'></button>
+    <button style="background-color: #612414" class="colorSample" @onclick='() => ChangeColor("#612414")'></button>
+    <button style="background-color: #000000" class="colorSample" @onclick='() => ChangeColor("#000000")'></button>
 </div>
 <script>
     window.getElementWidth = (element) => {

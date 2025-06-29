@@ -37,7 +37,8 @@
     border: 1px solid black;
     box-shadow: 3px 3px 3px black;
     border-radius: 5px;
-    width: fit-content;
+    width: 80vh;
+    height: 60vh;
     position: relative;
     margin-left: auto;
     margin-right: auto;
@@ -117,4 +118,19 @@
 #tC-10 {
     width: 100% !important;
     height: 100% !important;
+}
+
+#extraToolsDiv {
+    position: absolute;
+    bottom: 10%;
+    width: 60%;
+    left: 20%;
+    height: 5.5%;
+    background-color: #fae191;
+    border-radius: 3%;
+    border: 1px solid black;
+    box-shadow: 3px 3px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

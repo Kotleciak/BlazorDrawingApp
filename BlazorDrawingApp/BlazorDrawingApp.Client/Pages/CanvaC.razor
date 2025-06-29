@@ -6,26 +6,26 @@
 
 <div id="canvaContainer">
     <div @onmousedown="StartDrawing"
-         @onmouseup="StopDrawing"
-         @onmousemove="Draw"
-         id="CanvaDiv"
-         @ref="containerRef">
+    @onmouseup="StopDrawing"
+    @onmousemove="Draw"
+    id="CanvaDiv"
+    @ref="containerRef">
         <BECanvas Width="@_canvasWidth" Height="@_canvasHeight" @ref="_canvasReference">
         </BECanvas>
     </div>
 </div>
 <div class="toolDiv" id="BrushDiv">
     <!--Brush thickness-->
-    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-1" @onclick='() => ChangeThickness(1)'></div></button>
-    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-2" @onclick='() => ChangeThickness(2)'></div></button>
-    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-3" @onclick='() => ChangeThickness(3)'></div></button>
-    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-4" @onclick='() => ChangeThickness(4)'></div></button>
-    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-5" @onclick='() => ChangeThickness(5)'></div></button>
-    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-6" @onclick='() => ChangeThickness(6)'></div></button>
-    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-7" @onclick='() => ChangeThickness(7)'></div></button>
-    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-8" @onclick='() => ChangeThickness(8)'></div></button>
-    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-9" @onclick='() => ChangeThickness(9)'></div></button>
-    <button class="thicknessChanger"><div class="thicknessChangerDiv" id="tC-10" @onclick='() => ChangeThickness(10)'></div></button>
+    <button class="thicknessChanger" @onclick='() => ChangeThickness(1)'><div class="thicknessChangerDiv" id="tC-1"></div></button>
+    <button class="thicknessChanger" @onclick='() => ChangeThickness(2)'><div class="thicknessChangerDiv" id="tC-2"></div></button>
+    <button class="thicknessChanger" @onclick='() => ChangeThickness(3)'><div class="thicknessChangerDiv" id="tC-3"></div></button>
+    <button class="thicknessChanger" @onclick='() => ChangeThickness(4)'><div class="thicknessChangerDiv" id="tC-4"></div></button>
+    <button class="thicknessChanger" @onclick='() => ChangeThickness(5)'><div class="thicknessChangerDiv" id="tC-5"></div></button>
+    <button class="thicknessChanger" @onclick='() => ChangeThickness(6)'><div class="thicknessChangerDiv" id="tC-6"></div></button>
+    <button class="thicknessChanger" @onclick='() => ChangeThickness(7)'><div class="thicknessChangerDiv" id="tC-7"></div></button>
+    <button class="thicknessChanger" @onclick='() => ChangeThickness(8)'><div class="thicknessChangerDiv" id="tC-8"></div></button>
+    <button class="thicknessChanger" @onclick='() => ChangeThickness(9)'><div class="thicknessChangerDiv" id="tC-9"></div></button>
+    <button class="thicknessChanger" @onclick='() => ChangeThickness(10)'><div class="thicknessChangerDiv" id="tC-10"></div></button>
 </div>
 <div class="toolDiv" id="ColorDiv">
     <!--Brush color-->
@@ -42,6 +42,12 @@
     <button style="background-color: #360c01" class="colorSample" @onclick='() => ChangeColor("#360c01")'></button>
     <button style="background-color: #612414" class="colorSample" @onclick='() => ChangeColor("#612414")'></button>
     <button style="background-color: #000000" class="colorSample" @onclick='() => ChangeColor("#000000")'></button>
+</div>
+<div id="extraToolsDiv">
+    <input type="checkbox" value="erase" @onchange='(e) => EraseModeChanged(e)'/>
+    <button @onclick='ClearCanvas'>clear</button>
+    <button>save</button>
+    <input type="color" @onchange='(e) => ChangeColorPicker(e)'/>
 </div>
 <script>
     window.getElementWidth = (element) => {
@@ -61,6 +67,8 @@
     private int _canvasWidth = 100;
     private int _canvasHeight = 400;
     private ElementReference containerRef;
+    private int BrushThickness = 1; // Default thickness
+    private string BrushColor = "#000000";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -89,12 +97,16 @@
 
     private async Task Draw(MouseEventArgs e)
     {
+
         if (_isDrawing)
         {
-            await this._context.BeginPathAsync();
-            await this._context.MoveToAsync(_lastX, _lastY);
-            await this._context.LineToAsync(e.OffsetX, e.OffsetY);
-            await this._context.StrokeAsync();
+            await _context.SetLineWidthAsync((float)BrushThickness);
+            await _context.SetLineCapAsync(LineCap.Round);
+            await _context.BeginPathAsync();
+            await _context.MoveToAsync(_lastX, _lastY);
+            await _context.LineToAsync(e.OffsetX, e.OffsetY);
+            await _context.StrokeAsync();
+            await _context.ClosePathAsync();
 
             _lastX = e.OffsetX;
             _lastY = e.OffsetY;
@@ -102,11 +114,33 @@
     }
     private async Task ChangeColor(string color)
     {
+        BrushColor = color;
         await _context.SetStrokeStyleAsync(color);
     }
-	private async Task ChangeThickness(int thickness)
-	{
-		await _context.SetLineWidthAsync((float)thickness);
-		//need to correct this
+    private async Task ChangeColorPicker(ChangeEventArgs e)
+    {
+        var color = e.Value.ToString();
+        BrushColor = color;
+        await _context.SetStrokeStyleAsync(color);
     }
+    private async Task ChangeThickness(int thickness)
+    {
+        BrushThickness = thickness;
+		//Okey I am an idiot, I set onclick event to div instead of button
+    }
+    private async Task EraseModeChanged(ChangeEventArgs e)
+    {
+        if((bool)e.Value)
+        {
+            await _context.SetStrokeStyleAsync("#ffffff");
+        }
+        else
+        {
+			await _context.SetStrokeStyleAsync(BrushColor);
+        }
+    }
+	private async Task ClearCanvas()
+	{
+		await _context.ClearRectAsync(0, 0, _canvasWidth, _canvasHeight);
+	}
 }

@@ -36,7 +36,6 @@
     cursor: crosshair;
     border: 1px solid black;
     box-shadow: 3px 3px 3px black;
-    border-radius: 5px;
     width: 80vh;
     height: 60vh;
     position: relative;
@@ -131,6 +130,76 @@
     border: 1px solid black;
     box-shadow: 3px 3px black;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    padding-left: 10%;
+    padding-right: 10%;
     align-items: center;
+}
+.BottomTools {
+    border: none;
+    background-color: #f5df98;
+
+}
+#EraseCheckbox {
+    display: none;   
+}
+#EraseLabel {
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    transition: color 0.5s ease;
+}
+    #EraseLabel:hover {
+        color: #545454;
+    }
+#EraseCheckbox:checked + #EraseLabel {
+    color: #545454;
+    text-decoration: underline;
+}
+#clearButton {
+    background-color: transparent;
+    color: red;
+    border: none;
+    font-size: 1.2em;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    transition: color 0.5s ease;
+}
+    #clearButton:hover {
+        color: #bf0f02;
+        font-family: 'Roboto';
+    }
+#saveButton {
+    background-color: transparent;
+    color: #00030f;
+    border: none;
+    font-size: 1.2em;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    transition: color 0.5s ease;
+}
+
+    #saveButton:hover {
+        color: #0f6b02;
+        font-family: 'Roboto';
+    }
+input[type="color"] {
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+}
+#ColorPickerDiv {
+    display: inline;
+    width: fit-content;
+    height: fit-content;
+    background: linear-gradient(to top right, #ff0000 0%, #ff6a00 10%, #ffd900 20%, #b3ff00 30%, #2c7d00 40%, #00ffc8 50%, #00d5ff 60%, #001c82 70%, #6f08ff 80%, #ff08ea 90%, #360c01 100%);
+    background-size: 300% 300%;
+    background-position: 0% 50%;
+    border-radius: 3px;
+    animation: anim 20s linear infinite;
+}
+@keyframes anim {
+    100% {
+        background-position: 100% 50%;
+    }
 }

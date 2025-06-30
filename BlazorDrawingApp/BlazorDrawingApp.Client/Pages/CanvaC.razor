@@ -3,6 +3,7 @@
 @page "/canva"
 @rendermode InteractiveWebAssembly
 
+<PageTitle>Kotleciak's Canva</PageTitle>
 
 <div id="canvaContainer">
     <div @onmousedown="StartDrawing"
@@ -44,10 +45,10 @@
     <button style="background-color: #000000" class="colorSample" @onclick='() => ChangeColor("#000000")'></button>
 </div>
 <div id="extraToolsDiv">
-    <input type="checkbox" value="erase" @onchange='(e) => EraseModeChanged(e)'/>
-    <button @onclick='ClearCanvas'>clear</button>
-    <button>save</button>
-    <input type="color" @onchange='(e) => ChangeColorPicker(e)'/>
+    <input type="checkbox" @onchange='(e) => EraseModeChanged(e)' id="EraseCheckbox" name="a" /><label for="EraseCheckbox" id="EraseLabel">erase</label>
+    <button @onclick='ClearCanvas' id="clearButton">clear</button>
+    <button @onclick="SaveCanvasAsPng" id="saveButton">save</button>
+    <div id="ColorPickerDiv"><input type="color" @onchange='(e) => ChangeColorPicker(e)' /></div>
 </div>
 <script>
     window.getElementWidth = (element) => {
@@ -55,6 +56,15 @@
     };
     window.getElementHeight = (element) => {
     return element.offsetHeight;
+    };
+            window.downloadCanvasByRef = (canvas, filename) => {
+        var dataUrl = canvas.toDataURL("image/png");
+        var link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = filename || "mydrawing.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     };
 </script>
 
@@ -78,6 +88,9 @@
             _canvasHeight = await JS.InvokeAsync<int>("getElementHeight", containerRef);//I know how it works
             StateHasChanged();//but not this one how it works, but it works and github copilot was right
             _context = await this._canvasReference.CreateCanvas2DAsync();
+            await _context.SetFillStyleAsync("#ffffff");
+            await _context.FillRectAsync(0, 0, _canvasWidth, _canvasHeight);
+            await _context.SetStrokeStyleAsync(BrushColor);
         }
     }
 
@@ -141,6 +154,13 @@
     }
 	private async Task ClearCanvas()
 	{
-		await _context.ClearRectAsync(0, 0, _canvasWidth, _canvasHeight);
+        await _context.ClearRectAsync(0, 0, _canvasWidth, _canvasHeight);
+        await _context.SetFillStyleAsync("#ffffff");
+        await _context.FillRectAsync(0, 0, _canvasWidth, _canvasHeight);
+        await _context.SetStrokeStyleAsync(BrushColor);
 	}
+    public async Task SaveCanvasAsPng()
+    {
+        await JS.InvokeVoidAsync("downloadCanvasByRef", _canvasReference.CanvasReference, "mydrawing.png");
+    }
 }

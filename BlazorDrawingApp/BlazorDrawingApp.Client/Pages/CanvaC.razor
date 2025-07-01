@@ -11,6 +11,8 @@
     @onmousemove="Draw"
     id="CanvaDiv"
     @ref="containerRef">
+        <BECanvas Width="@_canvasWidth" Height="@_canvasHeight" @ref="_canvasReference2">
+        </BECanvas>
         <BECanvas Width="@_canvasWidth" Height="@_canvasHeight" @ref="_canvasReference">
         </BECanvas>
     </div>
@@ -49,22 +51,44 @@
     <button @onclick='ClearCanvas' id="clearButton">clear</button>
     <button @onclick="SaveCanvasAsPng" id="saveButton">save</button>
     <div id="ColorPickerDiv"><input type="color" @onchange='(e) => ChangeColorPicker(e)' /></div>
+    <button id="DrawRectangleButton" @onclick="() => DrawingRectangle()">Rectangle</button>
 </div>
 <script>
+    let id = 0;
     window.getElementWidth = (element) => {
     return element.offsetWidth;
     };
     window.getElementHeight = (element) => {
     return element.offsetHeight;
     };
-            window.downloadCanvasByRef = (canvas, filename) => {
-        var dataUrl = canvas.toDataURL("image/png");
-        var link = document.createElement('a');
-        link.href = dataUrl;
-        link.download = filename || "mydrawing.png";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    window.downloadCanvasByRef = (canvas, filename) => {
+    var dataUrl = canvas.toDataURL("image/png");
+    var link = document.createElement('a');
+    link.href = dataUrl;
+    link.download = filename || "mydrawing.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    };
+    window.StartDrawingRectangle = () => {
+        let upperCanva = document.getElementById("1")
+        upperCanva.style.zIndex = "-1"
+    }
+    window.StopDrawingRectangle = () => {
+        let upperCanva = document.getElementById("1")
+        upperCanva.style.zIndex = "2"
+    }
+    window.setCanvasLayers = () => {
+    // Pobierz wszystkie canvasy w kontenerze
+    const canvases = document.querySelectorAll('#CanvaDiv canvas');
+    canvases.forEach((c, idx) => {
+    c.style.position = "absolute";
+    c.style.left = "0";
+    c.style.top = "0";
+    c.style.zIndex = idx + 1;
+    c.id = idx
+    c.classList.add("canvas-layer-" + (idx + 1));
+    });
     };
 </script>
 
@@ -72,6 +96,9 @@
 @code {
     private Canvas2DContext _context;
     private BECanvasComponent _canvasReference;
+    private Canvas2DContext _context2;
+    private BECanvasComponent _canvasReference2;
+
     private double _lastX, _lastY;
     private bool _isDrawing = false;
     private int _canvasWidth = 100;
@@ -79,18 +106,25 @@
     private ElementReference containerRef;
     private int BrushThickness = 1; // Default thickness
     private string BrushColor = "#000000";
-
+    private bool _drawingRectangle = false;
+	
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            await JS.InvokeVoidAsync("setCanvasLayers");
+
             _canvasWidth = await JS.InvokeAsync<int>("getElementWidth", containerRef);
             _canvasHeight = await JS.InvokeAsync<int>("getElementHeight", containerRef);//I know how it works
             StateHasChanged();//but not this one how it works, but it works and github copilot was right
             _context = await this._canvasReference.CreateCanvas2DAsync();
+            _context2 = await this._canvasReference2.CreateCanvas2DAsync();
+
             await _context.SetFillStyleAsync("#ffffff");
             await _context.FillRectAsync(0, 0, _canvasWidth, _canvasHeight);
             await _context.SetStrokeStyleAsync(BrushColor);
+
+            await _context2.SetStrokeStyleAsync(BrushColor);
         }
     }
 
@@ -102,16 +136,21 @@
         _lastY = e.OffsetY;
     }
 
-    private Task StopDrawing(MouseEventArgs e)
+    private async Task StopDrawing(MouseEventArgs e)
     {
         _isDrawing = false;
-        return Task.CompletedTask;
+        if (_drawingRectangle)
+        {
+            await _context2.ClearRectAsync(0, 0, (double)_canvasWidth, (double)_canvasHeight);
+            await _context.SetFillStyleAsync(BrushColor);
+            await _context.FillRectAsync(_lastX, _lastY, e.OffsetX - _lastX, e.OffsetY - _lastY);
+        }
     }
 
     private async Task Draw(MouseEventArgs e)
     {
 
-        if (_isDrawing)
+        if (_isDrawing && !_drawingRectangle)
         {
             await _context.SetLineWidthAsync((float)BrushThickness);
             await _context.SetLineCapAsync(LineCap.Round);
@@ -123,6 +162,23 @@
 
             _lastX = e.OffsetX;
             _lastY = e.OffsetY;
+        }
+        else if (_isDrawing && _drawingRectangle)
+        {
+
+            await _context2.SetLineWidthAsync((float)BrushThickness);
+            await _context2.SetLineCapAsync(LineCap.Round);
+            await _context2.BeginPathAsync();
+            double x = _lastX;
+            double y = _lastY;
+            double width = e.OffsetX - _lastX;
+            double height = e.OffsetY - _lastY;
+
+            await _context2.BeginPathAsync();
+            await _context2.ClearRectAsync(0, 0, _canvasWidth, _canvasHeight);
+            await _context2.SetFillStyleAsync(BrushColor);
+            await _context2.FillRectAsync(x, y, width, height);
+            await _context2.ClosePathAsync();
         }
     }
     private async Task ChangeColor(string color)
@@ -139,7 +195,7 @@
     private async Task ChangeThickness(int thickness)
     {
         BrushThickness = thickness;
-		//Okey I am an idiot, I set onclick event to div instead of button
+        //Okey I am an idiot, I set onclick event to div instead of button
     }
     private async Task EraseModeChanged(ChangeEventArgs e)
     {
@@ -149,18 +205,31 @@
         }
         else
         {
-			await _context.SetStrokeStyleAsync(BrushColor);
+            await _context.SetStrokeStyleAsync(BrushColor);
         }
     }
-	private async Task ClearCanvas()
-	{
+    private async Task ClearCanvas()
+    {
         await _context.ClearRectAsync(0, 0, _canvasWidth, _canvasHeight);
         await _context.SetFillStyleAsync("#ffffff");
         await _context.FillRectAsync(0, 0, _canvasWidth, _canvasHeight);
         await _context.SetStrokeStyleAsync(BrushColor);
-	}
+    }
     public async Task SaveCanvasAsPng()
     {
         await JS.InvokeVoidAsync("downloadCanvasByRef", _canvasReference.CanvasReference, "mydrawing.png");
+    }
+    public async Task DrawingRectangle()
+    {
+        if (!_drawingRectangle)
+        {
+            _drawingRectangle = true;
+            await JS.InvokeVoidAsync("StartDrawingRectangle");
+        }
+        else
+        {
+            _drawingRectangle = false;
+            await JS.InvokeVoidAsync("StopDrawingRectangle");
+        }
     }
 }

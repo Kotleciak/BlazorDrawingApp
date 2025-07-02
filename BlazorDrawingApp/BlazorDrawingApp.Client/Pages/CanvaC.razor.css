@@ -29,8 +29,8 @@
 }
 .colorLabel {
     display: block;
-    width: 40px;
-    height: 40px;
+    width: 37.5px;
+    height: 37.5px;
     border-radius: 50%;
 }
     .colorLabel:hover {

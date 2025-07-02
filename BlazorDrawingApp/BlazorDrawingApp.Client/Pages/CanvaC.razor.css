@@ -12,26 +12,34 @@
     align-items: center;
 }
 #BrushDiv {
-    left: 5%;
+    left: 7.5%;
     top:10%;
 }
 #ColorDiv {
-    right: 5%;
+    right: 7.5%;
     top: 10%;
 }
 .colorSample {
-    border: none;
-    border-radius: 50%;
-    width: 40px; 
-    height: 40px; 
-    display: block;
-    display: block;
-    box-sizing: border-box;
+    display: none;
 }
-    .colorSample:hover {
+
+.colorSample:hover {
+    border: 2px solid lightgray;
+    padding: 8px;
+}
+.colorLabel {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+    .colorLabel:hover {
         border: 2px solid lightgray;
-        padding: 8px;
+        cursor: pointer;
     }
+.colorSample:checked + .colorLabel {
+    border: 2px solid gray;
+}
 #CanvaDiv {
     cursor: crosshair;
     border: 1px solid black;
@@ -41,16 +49,18 @@
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    
+    max-width: 70%;
+    overflow: hidden;
 }
 #canvaContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
+    overflow: hidden;
 }
 .thicknessChanger {
-    display: block;
+    display: flex;
     height: 30px;
     width: 30px;
     border-radius: 50%;
@@ -64,6 +74,7 @@
 }
     .thicknessChanger:hover {
         background-color: #f5df98;
+        border: 2px solid lightgray;
     }
         .thicknessChanger:hover .thicknessChangerDiv {
             background-color: #0a0a0a;
@@ -118,12 +129,17 @@
     width: 100% !important;
     height: 100% !important;
 }
-
+.ThickBtn{
+    display: none;
+}
+    .ThickBtn:checked + .thicknessChanger {
+        border:2px solid gray;
+    }
 #extraToolsDiv {
     position: absolute;
     bottom: 10%;
-    width: 60%;
-    left: 20%;
+    width: 50%;
+    left: 25%;
     height: 5.5%;
     background-color: #fae191;
     border-radius: 3%;
@@ -131,8 +147,6 @@
     box-shadow: 3px 3px black;
     display: flex;
     justify-content: space-evenly;
-    padding-left: 10%;
-    padding-right: 10%;
     align-items: center;
 }
 .BottomTools {
@@ -188,18 +202,23 @@ input[type="color"] {
     background: transparent;
     cursor: pointer;
 }
-#ColorPickerDiv {
-    display: inline;
-    width: fit-content;
-    height: fit-content;
-    background: linear-gradient(to top right, #ff0000 0%, #ff6a00 10%, #ffd900 20%, #b3ff00 30%, #2c7d00 40%, #00ffc8 50%, #00d5ff 60%, #001c82 70%, #6f08ff 80%, #ff08ea 90%, #360c01 100%);
-    background-size: 300% 300%;
-    background-position: 0% 50%;
-    border-radius: 3px;
-    animation: anim 20s linear infinite;
+.toolSelectorBtn {
+    display: none;
 }
-@keyframes anim {
-    100% {
-        background-position: 100% 50%;
+.toolSelectLabel {
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #f7ebc3;
+    border: 2px solid #c9ab47;
+    text-align: center;
+}
+    .toolSelectLabel:hover {
+        background-color: #fae6a5;
+        border: 2px solid lightgray;
     }
+.toolSelectorBtn:checked + .toolSelectLabel {
+    background-color: #fae6a5;
+    border: 2px solid gray;
 }

@@ -4,7 +4,7 @@
 @rendermode InteractiveWebAssembly
 
 <PageTitle>Kotleciak's Canva</PageTitle>
-
+<h1 style="display:block; position:absolute; top: 5%; text-align:center; left: 50%; font-family: 'Roboto';font-style: italic; transform: translateX(-50%);">Kotleciak's Canva</h1>
 <div id="canvaContainer">
     <div @onmousedown="StartDrawing"
     @onmouseup="StopDrawing"
@@ -19,44 +19,74 @@
 </div>
 <div class="toolDiv" id="BrushDiv">
     <!--Brush thickness-->
-    <button class="thicknessChanger" @onclick='() => ChangeThickness(1)'><div class="thicknessChangerDiv" id="tC-1"></div></button>
-    <button class="thicknessChanger" @onclick='() => ChangeThickness(2)'><div class="thicknessChangerDiv" id="tC-2"></div></button>
-    <button class="thicknessChanger" @onclick='() => ChangeThickness(3)'><div class="thicknessChangerDiv" id="tC-3"></div></button>
-    <button class="thicknessChanger" @onclick='() => ChangeThickness(4)'><div class="thicknessChangerDiv" id="tC-4"></div></button>
-    <button class="thicknessChanger" @onclick='() => ChangeThickness(5)'><div class="thicknessChangerDiv" id="tC-5"></div></button>
-    <button class="thicknessChanger" @onclick='() => ChangeThickness(6)'><div class="thicknessChangerDiv" id="tC-6"></div></button>
-    <button class="thicknessChanger" @onclick='() => ChangeThickness(7)'><div class="thicknessChangerDiv" id="tC-7"></div></button>
-    <button class="thicknessChanger" @onclick='() => ChangeThickness(8)'><div class="thicknessChangerDiv" id="tC-8"></div></button>
-    <button class="thicknessChanger" @onclick='() => ChangeThickness(9)'><div class="thicknessChangerDiv" id="tC-9"></div></button>
-    <button class="thicknessChanger" @onclick='() => ChangeThickness(10)'><div class="thicknessChangerDiv" id="tC-10"></div></button>
+    <input type="radio" id="thick1" name="thicBtn" class="ThickBtn" checked/>
+    <label class="thicknessChanger" @onclick='() => ChangeThickness(1)' for="thick1"><div class="thicknessChangerDiv" id="tC-1"></div></label>
+    <input type="radio" id="thick2" name="thicBtn" class="ThickBtn" />
+    <label class="thicknessChanger" @onclick='() => ChangeThickness(2)' for="thick2"><div class="thicknessChangerDiv" id="tC-2"></div></label>
+    <input type="radio" id="thick3" name="thicBtn" class="ThickBtn" />
+    <label class="thicknessChanger" @onclick='() => ChangeThickness(3)' for="thick3"><div class="thicknessChangerDiv" id="tC-3"></div></label>
+    <input type="radio" id="thick4" name="thicBtn" class="ThickBtn" />
+    <label class="thicknessChanger" @onclick='() => ChangeThickness(4)' for="thick4"><div class="thicknessChangerDiv" id="tC-4"></div></label>
+    <input type="radio" id="thick5" name="thicBtn" class="ThickBtn" />
+    <label class="thicknessChanger" @onclick='() => ChangeThickness(5)' for="thick5"><div class="thicknessChangerDiv" id="tC-5"></div></label>
+    <input type="radio" id="thick6" name="thicBtn" class="ThickBtn" />
+    <label class="thicknessChanger" @onclick='() => ChangeThickness(6)' for="thick6"><div class="thicknessChangerDiv" id="tC-6"></div></label>
+    <input type="radio" id="thick7" name="thicBtn" class="ThickBtn" />
+    <label class="thicknessChanger" @onclick='() => ChangeThickness(7)' for="thick7"><div class="thicknessChangerDiv" id="tC-7"></div></label>
+    <input type="radio" id="thick8" name="thicBtn" class="ThickBtn" />
+    <label class="thicknessChanger" @onclick='() => ChangeThickness(8)' for="thick8"><div class="thicknessChangerDiv" id="tC-8"></div></label>
+    <input type="radio" id="thick9" name="thicBtn" class="ThickBtn" />
+    <label class="thicknessChanger" @onclick='() => ChangeThickness(9)' for="thick9"><div class="thicknessChangerDiv" id="tC-9"></div></label>
+    <input type="radio" id="thick10" name="thicBtn" class="ThickBtn" />
+    <label class="thicknessChanger" @onclick='() => ChangeThickness(10)' for="thick10"><div class="thicknessChangerDiv" id="tC-10"></div></label>
 </div>
 <div class="toolDiv" id="ColorDiv">
     <!--Brush color-->
-    <button style="background-color: #ff0000" class="colorSample" @onclick='() => ChangeColor("#ff0000")'></button>
-    <button style="background-color: #ff6a00" class="colorSample" @onclick='() => ChangeColor("#ff6a00")'></button>
-    <button style="background-color: #ffd900" class="colorSample" @onclick='() => ChangeColor("#ffd900")'></button>
-    <button style="background-color: #b3ff00" class="colorSample" @onclick='() => ChangeColor("#b3ff00")'></button>
-    <button style="background-color: #2c7d00" class="colorSample" @onclick='() => ChangeColor("#2c7d00")'></button>
-    <button style="background-color: #00ffc8" class="colorSample" @onclick='() => ChangeColor("#00ffc8")'></button>
-    <button style="background-color: #00d5ff" class="colorSample" @onclick='() => ChangeColor("#00d5ff")'></button>
-    <button style="background-color: #001c82" class="colorSample" @onclick='() => ChangeColor("#001c82")'></button>
-    <button style="background-color: #6f08ff" class="colorSample" @onclick='() => ChangeColor("#6f08ff")'></button>
-    <button style="background-color: #ff08ea" class="colorSample" @onclick='() => ChangeColor("#ff08ea")'></button>
-    <button style="background-color: #360c01" class="colorSample" @onclick='() => ChangeColor("#360c01")'></button>
-    <button style="background-color: #612414" class="colorSample" @onclick='() => ChangeColor("#612414")'></button>
-    <button style="background-color: #000000" class="colorSample" @onclick='() => ChangeColor("#000000")'></button>
+    <input type="radio" style="background-color: #ff0000" class="colorSample" @onchange='() => ChangeColor("#ff0000")' name="colorBtn" id="color1"/>
+    <label for="color1" class="colorLabel" style="background-color:#ff0000;"></label>
+    <input type="radio" style="background-color: #ff6a00" class="colorSample" @onchange='() => ChangeColor("#ff6a00")' name="colorBtn" id="color2" />
+    <label for="color2" class="colorLabel" style="background-color:#ff6a00;"></label>
+    <input type="radio" style="background-color: #ffd900" class="colorSample" @onchange='() => ChangeColor("#ffd900")' name="colorBtn" id="color3" />
+    <label for="color3" class="colorLabel" style="background-color:#ffd900;"></label>
+    <input type="radio" style="background-color: #b3ff00" class="colorSample" @onchange='() => ChangeColor("#b3ff00")' name="colorBtn" id="color4" />
+    <label for="color4" class="colorLabel" style="background-color:#b3ff00;"></label>
+    <input type="radio" style="background-color: #2c7d00" class="colorSample" @onchange='() => ChangeColor("#2c7d00")' name="colorBtn" id="color5" />
+    <label for="color5" class="colorLabel" style="background-color:#2c7d00;"></label>
+    <input type="radio" style="background-color: #00ffc8" class="colorSample" @onchange='() => ChangeColor("#00ffc8")' name="colorBtn" id="color6" />
+    <label for="color6" class="colorLabel" style="background-color:#00ffc8;"></label>
+    <input type="radio" style="background-color: #00d5ff" class="colorSample" @onchange='() => ChangeColor("#00d5ff")' name="colorBtn" id="color7" />
+    <label for="color7" class="colorLabel" style="background-color:#00d5ff;"></label>
+    <input type="radio" style="background-color: #001c82" class="colorSample" @onchange='() => ChangeColor("#001c82")' name="colorBtn" id="color8" />
+    <label for="color8" class="colorLabel" style="background-color:#001c82;"></label>
+    <input type="radio" style="background-color: #6f08ff" class="colorSample" @onchange='() => ChangeColor("#6f08ff")' name="colorBtn" id="color9" />
+    <label for="color9" class="colorLabel" style="background-color:#6f08ff;"></label>
+    <input type="radio" style="background-color: #ff08ea" class="colorSample" @onchange='() => ChangeColor("#ff08ea")' name="colorBtn" id="color10" />
+    <label for="color10" class="colorLabel" style="background-color:#ff08ea;"></label>
+    <input type="radio" style="background-color: #360c01" class="colorSample" @onchange='() => ChangeColor("#360c01")' name="colorBtn" id="color11" />
+    <label for="color11" class="colorLabel" style="background-color:#360c01;"></label>
+    <input type="radio" style="background-color: #612414" class="colorSample" @onchange='() => ChangeColor("#612414")' name="colorBtn" id="color12" />
+    <label for="color12" class="colorLabel" style="background-color:#612414;"></label>
+    <input type="radio" style="background-color: #4f4f4f" class="colorSample" @onchange='() => ChangeColor("#4f4f4f")' name="colorBtn" id="color13" />
+    <label for="color13" class="colorLabel" style="background-color:#4f4f4f;"></label>
+    <input type="radio" style="background-color: #000000" class="colorSample" @onchange='() => ChangeColor("#000000")' name="colorBtn" id="color14" checked/>
+    <label for="color14" class="colorLabel" style="background-color:#000000;"></label>
 </div>
 <div id="extraToolsDiv">
-    <input type="checkbox" @onchange='(e) => EraseModeChanged(e)' id="EraseCheckbox" name="a" /><label for="EraseCheckbox" id="EraseLabel">erase</label>
-    <button @onclick='ClearCanvas' id="clearButton">clear</button>
-    <button @onclick="SaveCanvasAsPng" id="saveButton">save</button>
-    <div id="ColorPickerDiv"><input type="color" @onchange='(e) => ChangeColorPicker(e)' /></div>
-    <button id="DrawRectangleButton" @onclick="() => DrawingRectangle()">Rectangle</button>
+    <input type="radio" checked @onchange="() => ChangePencilMode()" name="1" class="toolSelectorBtn" id="tool1"/>
+    <label for="tool1" class="toolSelectLabel" title="Pecil">✏️</label>
+    <input type="radio" @onchange='(e) => EraseModeChanged(e)' name="1" class="toolSelectorBtn" id="tool2" />
+    <label for="tool2" class="toolSelectLabel" title="Rubber">👝</label>
+    <input type="radio" @onchange="() => DrawingRectangle()" name="1" class="toolSelectorBtn" id="tool3" />
+    <label for="tool3" class="toolSelectLabel" title="Rectangle">▯</label>
+    <input type="radio" @onchange="() => DrawingStraightLine()" name="1" class="toolSelectorBtn" id="tool4" />
+    <label for="tool4" class="toolSelectLabel" title="Straight line">│</label>
+    <button @onclick='ClearCanvas' id="clearButton" title="Clear canva">🗑</button>
+    <button @onclick="SaveCanvasAsPng" id="saveButton" title="Download image">⬇️</button>
 </div>
 <script>
     let id = 0;
     window.getElementWidth = (element) => {
-    return element.offsetWidth;
+		return element.offsetWidth;
     };
     window.getElementHeight = (element) => {
     return element.offsetHeight;
@@ -65,21 +95,21 @@
     var dataUrl = canvas.toDataURL("image/png");
     var link = document.createElement('a');
     link.href = dataUrl;
-    link.download = filename || "mydrawing.png";
+    link.download = filename || "Cool Drawing.png";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     };
     window.StartDrawingRectangle = () => {
-        let upperCanva = document.getElementById("1")
-        upperCanva.style.zIndex = "-1"
+    let upperCanva = document.getElementById("1")
+    upperCanva.style.zIndex = "-1"
     }
     window.StopDrawingRectangle = () => {
-        let upperCanva = document.getElementById("1")
-        upperCanva.style.zIndex = "2"
+    let upperCanva = document.getElementById("1")
+    upperCanva.style.zIndex = "2"
     }
     window.setCanvasLayers = () => {
-    // Pobierz wszystkie canvasy w kontenerze
+    document.body.style.overflow = "hidden";
     const canvases = document.querySelectorAll('#CanvaDiv canvas');
     canvases.forEach((c, idx) => {
     c.style.position = "absolute";
@@ -100,14 +130,17 @@
     private BECanvasComponent _canvasReference2;
 
     private double _lastX, _lastY;
-    private bool _isDrawing = false;
     private int _canvasWidth = 100;
     private int _canvasHeight = 400;
     private ElementReference containerRef;
     private int BrushThickness = 1; // Default thickness
     private string BrushColor = "#000000";
     private bool _drawingRectangle = false;
-	
+    private bool _isDrawing = false;
+    private bool _pencilMode = true;
+    private bool _straightLineMode = false;
+    private bool _eraseMode = false;
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -127,6 +160,17 @@
             await _context2.SetStrokeStyleAsync(BrushColor);
         }
     }
+    private async Task ChangePencilMode()
+    {
+        _pencilMode = !_pencilMode;
+        if(_drawingRectangle) { _drawingRectangle = false; }
+        if (_straightLineMode) { _straightLineMode = false; }
+        if (_eraseMode) { _eraseMode = false; }
+        if(_pencilMode)
+        {
+			await _context.SetStrokeStyleAsync(BrushColor);
+        }
+    }
 
 
     private async Task StartDrawing(MouseEventArgs e)
@@ -139,18 +183,30 @@
     private async Task StopDrawing(MouseEventArgs e)
     {
         _isDrawing = false;
-        if (_drawingRectangle)
+        if (_drawingRectangle && !_straightLineMode)
         {
             await _context2.ClearRectAsync(0, 0, (double)_canvasWidth, (double)_canvasHeight);
             await _context.SetFillStyleAsync(BrushColor);
             await _context.FillRectAsync(_lastX, _lastY, e.OffsetX - _lastX, e.OffsetY - _lastY);
         }
+		if (_straightLineMode)
+		{
+            await _context2.ClearRectAsync(0, 0, _canvasWidth, _canvasHeight);
+
+            await _context.SetLineWidthAsync((float)BrushThickness);
+            await _context.SetStrokeStyleAsync(BrushColor);
+            await _context.BeginPathAsync();
+            await _context.MoveToAsync(_lastX, _lastY);
+            await _context.LineToAsync(e.OffsetX, e.OffsetY);
+            await _context.StrokeAsync();
+            await _context.ClosePathAsync();
+		}
     }
 
     private async Task Draw(MouseEventArgs e)
     {
 
-        if (_isDrawing && !_drawingRectangle)
+        if (_isDrawing && !_drawingRectangle && !_straightLineMode)
         {
             await _context.SetLineWidthAsync((float)BrushThickness);
             await _context.SetLineCapAsync(LineCap.Round);
@@ -163,7 +219,7 @@
             _lastX = e.OffsetX;
             _lastY = e.OffsetY;
         }
-        else if (_isDrawing && _drawingRectangle)
+        else if (_isDrawing && _drawingRectangle && !_straightLineMode)
         {
 
             await _context2.SetLineWidthAsync((float)BrushThickness);
@@ -178,6 +234,17 @@
             await _context2.ClearRectAsync(0, 0, _canvasWidth, _canvasHeight);
             await _context2.SetFillStyleAsync(BrushColor);
             await _context2.FillRectAsync(x, y, width, height);
+            await _context2.ClosePathAsync();
+        }
+        else if (_isDrawing && _straightLineMode)
+        {
+            await _context2.ClearRectAsync(0, 0, _canvasWidth, _canvasHeight);
+            await _context2.SetLineWidthAsync((float)BrushThickness);
+            await _context2.SetStrokeStyleAsync(BrushColor);
+            await _context2.BeginPathAsync();
+            await _context2.MoveToAsync(_lastX, _lastY);
+            await _context2.LineToAsync(e.OffsetX, e.OffsetY);
+            await _context2.StrokeAsync();
             await _context2.ClosePathAsync();
         }
     }
@@ -199,7 +266,11 @@
     }
     private async Task EraseModeChanged(ChangeEventArgs e)
     {
-        if((bool)e.Value)
+		_eraseMode = !_eraseMode;
+        if (_drawingRectangle) { _drawingRectangle = false; }
+        if (_straightLineMode) { _straightLineMode = false; }
+		if (_pencilMode) { _pencilMode = false; }
+        if(_eraseMode)
         {
             await _context.SetStrokeStyleAsync("#ffffff");
         }
@@ -207,6 +278,7 @@
         {
             await _context.SetStrokeStyleAsync(BrushColor);
         }
+		_eraseMode = !_eraseMode;
     }
     private async Task ClearCanvas()
     {
@@ -217,18 +289,37 @@
     }
     public async Task SaveCanvasAsPng()
     {
-        await JS.InvokeVoidAsync("downloadCanvasByRef", _canvasReference.CanvasReference, "mydrawing.png");
+        await JS.InvokeVoidAsync("downloadCanvasByRef", _canvasReference.CanvasReference, "Cool Drawing.png");
     }
     public async Task DrawingRectangle()
     {
         if (!_drawingRectangle)
         {
             _drawingRectangle = true;
+			if (_straightLineMode) { _straightLineMode = false; }
+			if (_eraseMode) { _eraseMode = false; }
+			if (_pencilMode) { _pencilMode = false; }
             await JS.InvokeVoidAsync("StartDrawingRectangle");
         }
         else
         {
             _drawingRectangle = false;
+            await JS.InvokeVoidAsync("StopDrawingRectangle");
+        }
+    }
+    public async Task DrawingStraightLine()
+    {
+        if (!_straightLineMode)
+        {
+            _straightLineMode = true;
+            if (_drawingRectangle) { _drawingRectangle = false; }
+			if (_eraseMode) { _eraseMode = false; }
+            if (_pencilMode) { _pencilMode = false; }
+            await JS.InvokeVoidAsync("StartDrawingRectangle");
+        }
+        else
+        {
+            _straightLineMode = false;
             await JS.InvokeVoidAsync("StopDrawingRectangle");
         }
     }
